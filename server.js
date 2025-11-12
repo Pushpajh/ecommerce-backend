@@ -10,6 +10,15 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("✅ E-commerce backend is running successfully 🚀");
 });
+// Temporary test route for products
+app.get("/api/products", (req, res) => {
+  res.json([
+    { _id: 1, name: "Laptop", price: 599 },
+    { _id: 2, name: "Headphones", price: 199 },
+    { _id: 3, name: "Smartwatch", price: 299 },
+  ]);
+});
+
 
 mongoose
   .connect(process.env.MONGO_URI)
