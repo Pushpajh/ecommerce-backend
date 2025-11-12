@@ -7,23 +7,30 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Import route files
+const authRoutes = require("./routes/authRoutes");
+const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes");
+
+// Use the routes
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/wishlist", wishlistRoutes);
+
+// Home route
 app.get("/", (req, res) => {
   res.send("✅ E-commerce backend is running successfully 🚀");
 });
-// Temporary test route for products
-app.get("/api/products", (req, res) => {
-  res.json([
-    { _id: 1, name: "Laptop", price: 599 },
-    { _id: 2, name: "Headphones", price: 199 },
-    { _id: 3, name: "Smartwatch", price: 299 },
-  ]);
-});
 
-
+// Connect MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log("❌ MongoDB Connection Error:", err.message));
 
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
